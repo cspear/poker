@@ -134,7 +134,7 @@ class Poker
     puts printed
 
     puts rank
-    puts " "
+    # puts " "
   end
 
   def rank_cards(hand)
