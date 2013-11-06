@@ -16,11 +16,10 @@ require_relative '../hand'
 describe "am_i_flush" do
 
   before(:each) do
-    @testdeck = Deck.new
-    @deck = @testdeck.create_deck
+    # @testdeck = Deck.new
+    # @deck = @testdeck.create_deck
     @hand = Hand.new
     #@testhand = @hand.deal_cards(@deck)
-    puts @testhand
   end
 
   it "should be a flush" do
@@ -39,11 +38,11 @@ end
 
 describe "am_i_a_straight" do
   before(:each) do
-    @testdeck = Deck.new
-    @deck = @testdeck.create_deck
+    # @testdeck = Deck.new
+    # @deck = @testdeck.create_deck
     @hand = Hand.new
     #@testhand = @hand.deal_cards(@deck)
-    puts @testhand
+    # puts @testhand
   end
 
   it "should be a straight" do
@@ -62,8 +61,8 @@ end
 
 describe "am_i_multi_same" do
     before(:each) do
-    @testdeck = Deck.new
-    @deck = @testdeck.create_deck
+    # @testdeck = Deck.new
+    # @deck = @testdeck.create_deck
     @hand = Hand.new
     #@testhand = @hand.deal_cards(@deck)
   end
@@ -76,9 +75,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql 'one pair'
   end
 
 
@@ -90,9 +89,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql 'two pair'
   end
 
 
@@ -104,9 +103,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql 'three of a kind'
   end
 
 
@@ -118,9 +117,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql 'four of a kind'
   end
 
 
@@ -132,9 +131,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql 'full house'
   end
 
 
@@ -146,9 +145,9 @@ describe "am_i_multi_same" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi(@testhand)
+    test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql true
+    test_hand.should eql ""
   end
 
 end
