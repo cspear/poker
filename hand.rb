@@ -59,17 +59,17 @@ class Hand
   end
 
   def am_i_flush(hand)
-    d = nil
-    s = nil
-    c = nil
-    h = nil
+    d = 0
+    s = 0
+    c = 0
+    h = 0
     flush = false
 
     hand.each do |e|
-      if e.suite == 'diamonds' then d = d + 1 end
-      if e.suite == 'spades'   then s = s + 1 end
-      if e.suite == 'clubs'    then c = c + 1 end
-      if e.suite == 'hearts'   then h = h + 1 end
+      if e.suite == :diamonds then d = d + 1 end
+      if e.suite == :spades   then s = s + 1 end
+      if e.suite == :clubs    then c = c + 1 end
+      if e.suite == :hearts   then h = h + 1 end
     end
 
     if d == 5 then flush = true end
@@ -77,7 +77,7 @@ class Hand
     if c == 5 then flush = true end
     if h == 5 then flush = true end
 
-    puts "flush: #{flush}"
+    # puts "flush: #{flush}"
 
     return flush
   end
@@ -87,7 +87,8 @@ class Hand
 
     value_sorted = hand_sort(hand)
 
-    straight = nil
+    count_hits = 0
+    straight = false
     previous = 0
     index = 0
     value_sorted.each do |num|
@@ -95,21 +96,18 @@ class Hand
         previous = num.value
       else
         if num == previous + 1
-          # could be straight
+          count_hits = count_hits + 1
         else
           straight = false
         end
       end
       index = index + 1
+      previous = num.value
     end
 
-    if straight == false
-      straight = false
-    else
-      straight = true
-    end
+    if count_hits = 4 then straight = true end
 
-    puts "straight: #{straight}"
+    # puts "straight: #{straight}"
 
     return straight
   end
@@ -148,7 +146,7 @@ class Hand
       type = 'full house'
     end
 
-    puts "multi: #{type}"
+    # puts "multi: #{type}"
 
     return type
   end
@@ -159,7 +157,7 @@ class Hand
       if ea.value == 14 then ace = true end
     end
 
-    puts "ace: #{ace}"
+    # puts "ace: #{ace}"
     return ace
   end
 

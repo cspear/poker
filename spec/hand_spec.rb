@@ -30,9 +30,7 @@ describe "am_i_flush" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_flush(@testhand)
-
-    test_hand.should eql true
+    @hand.am_i_flush(@testhand).should eql true
   end
 end
 
@@ -53,9 +51,7 @@ describe "am_i_a_straight" do
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:six, :diamonds, 6)
 
-    test_hand = @hand.am_i_a_straight(@testhand)
-
-    test_hand.should eql true
+    @hand.am_i_a_straight(@testhand).should eql true
   end
 end
 
@@ -70,51 +66,45 @@ describe "am_i_multi_same" do
   it "should be ONE PAIR" do
     @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:four, :diamonds, 4)
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql 'one pair'
+    @hand.am_i_multi_same(@testhand).should eql 'one pair'
   end
 
 
   it "should be a TWO PAIR" do
     @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:three, :clubs, 3)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql 'two pair'
+    @hand.am_i_multi_same(@testhand).should eql 'two pair'
   end
 
 
   it "should be a THREE OF A KIND" do
     @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:two, :clubs, 2)
+    @testhand << Card.new(:two, :hearts, 2)
     @testhand << Card.new(:five, :diamonds, 5)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql 'three of a kind'
+    @hand.am_i_multi_same(@testhand).should eql 'three of a kind'
   end
 
 
   it "should be FOUR OF A KIND" do
     @testhand = []
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:nine, :diamonds, 9)
+    @testhand << Card.new(:nine, :clubs, 9)
+    @testhand << Card.new(:nine, :hearts, 9)
+    @testhand << Card.new(:nine, :spades, 9)
     @testhand << Card.new(:eleven, :diamonds, 11)
 
     test_hand = @hand.am_i_multi_same(@testhand)
@@ -126,10 +116,10 @@ describe "am_i_multi_same" do
   it "should be FULL HOUSE" do
     @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testhand << Card.new(:three, :clubs, 3)
+    @testhand << Card.new(:three, :hearts, 3)
 
     test_hand = @hand.am_i_multi_same(@testhand)
 
@@ -147,7 +137,7 @@ describe "am_i_multi_same" do
 
     test_hand = @hand.am_i_multi_same(@testhand)
 
-    test_hand.should eql ""
+    test_hand.should eql nil
   end
 
 end
