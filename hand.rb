@@ -9,7 +9,7 @@
 require_relative 'deck'
 
 
-
+#remove (hand) items.
 class Hand
 
   attr_accessor :hand
@@ -92,10 +92,11 @@ class Hand
     previous = 0
     index = 0
     value_sorted.each do |num|
+
       if index == 0
         previous = num.value
       else
-        if num == previous + 1
+        if num.value == previous + 1
           count_hits = count_hits + 1
         else
           straight = false
@@ -106,9 +107,6 @@ class Hand
     end
 
     if count_hits == 4 then straight = true end
-puts "count hits #{count_hits}"
-
-    # puts "straight: #{straight}"
 
     return straight
   end
@@ -124,7 +122,6 @@ puts "count hits #{count_hits}"
     type = nil
 
     (1..13).each do |ea|
-      # puts "hand count for #{ea} = #{nums_only.count(ea)}"
       if nums_only.count(ea) == 4 then
         type = 'four of a kind'
       elsif nums_only.count(ea) == 3 then
@@ -147,8 +144,6 @@ puts "count hits #{count_hits}"
       type = 'full house'
     end
 
-    # puts "multi: #{type}"
-
     return type
   end
 
@@ -158,7 +153,6 @@ puts "count hits #{count_hits}"
       if ea.value == 14 then ace = true end
     end
 
-    # puts "ace: #{ace}"
     return ace
   end
 
@@ -191,9 +185,7 @@ puts "count hits #{count_hits}"
     if type == nil then type = '-no rank-' end
     if type == '-no rank-' && ace_type == true then type = 'ace-high' end
 
-    # puts "type is: #{type}"
     print_hand_rank(hand, type)
-    # add logic to show winning hand.
     return type
   end
 
