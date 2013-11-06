@@ -105,7 +105,8 @@ class Hand
       previous = num.value
     end
 
-    if count_hits = 4 then straight = true end
+    if count_hits == 4 then straight = true end
+puts "count hits #{count_hits}"
 
     # puts "straight: #{straight}"
 
@@ -170,9 +171,10 @@ class Hand
     if straight then type = 'straight' end
 
     flush_type = am_i_flush(hand)
+
     if flush_type
       if straight
-        if ace
+        if ace_type
           type = 'royal flush'
         else
           type = 'straight flush'
@@ -192,6 +194,7 @@ class Hand
     # puts "type is: #{type}"
     print_hand_rank(hand, type)
     # add logic to show winning hand.
+    return type
   end
 
   def print_hand_rank(hand, rank)
