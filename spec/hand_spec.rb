@@ -16,32 +16,146 @@ require_relative '../hand'
 describe "am_i_flush" do
 
   before(:each) do
-    @fixed_hand = []
-    @th = Hand.new
+    @testdeck = Deck.new
+    @deck = @testdeck.create_deck
+    @hand = Hand.new
+    #@testhand = @hand.deal_cards(@deck)
+    puts @testhand
   end
 
   it "should be a flush" do
-    ## need to pass in an object!!  unsure how to recreate for testing.
-    @fixed_hand << [{:suite=>:diamonds, :number=>:one, :value=>1}]
-    @fixed_hand << [{:suite=>:diamonds, :number=>:two, :value=>2}]
-    @fixed_hand << [{:suite=>:diamonds, :number=>:three, :value=>3}]
-    @fixed_hand << [{:suite=>:diamonds, :number=>:four, :value=>4}]
-    @fixed_hand << [{:suite=>:diamonds, :number=>:five, :value=>5}]
-    test_hand = @th.am_i_flush(@fixed_hand)
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_flush(@testhand)
 
     test_hand.should eql true
   end
 end
 
-# describe "am_i_a_straight" do
-# end
+describe "am_i_a_straight" do
+  before(:each) do
+    @testdeck = Deck.new
+    @deck = @testdeck.create_deck
+    @hand = Hand.new
+    #@testhand = @hand.deal_cards(@deck)
+    puts @testhand
+  end
 
-# describe "am_i_multi_same" do
-# end
+  it "should be a straight" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :clubs, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:six, :diamonds, 6)
 
-# describe "do_i_have_ace" do
-# end
+    test_hand = @hand.am_i_a_straight(@testhand)
 
-# describe "rank_hand" do
-# end
+    test_hand.should eql true
+  end
+end
+
+describe "am_i_multi_same" do
+    before(:each) do
+    @testdeck = Deck.new
+    @deck = @testdeck.create_deck
+    @hand = Hand.new
+    #@testhand = @hand.deal_cards(@deck)
+  end
+
+  it "should be ONE PAIR" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+
+  it "should be a TWO PAIR" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+
+  it "should be a THREE OF A KIND" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+
+  it "should be FOUR OF A KIND" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+
+  it "should be FULL HOUSE" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+
+  it "should NOT be a multi" do
+    @testhand = []
+    @testhand << Card.new(:two, :diamonds, 2)
+    @testhand << Card.new(:three, :diamonds, 3)
+    @testhand << Card.new(:four, :diamonds, 4)
+    @testhand << Card.new(:five, :diamonds, 5)
+    @testhand << Card.new(:eleven, :diamonds, 11)
+
+    test_hand = @hand.am_i_multi(@testhand)
+
+    test_hand.should eql true
+  end
+
+end
+
+describe "do_i_have_ace" do
+end
+
+describe "rank_hand" do
+end
 

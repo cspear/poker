@@ -17,7 +17,7 @@ class Card
 
   def to_s
     # "FROM CARD: #{@number}:#{@suite}-#{@value}"
-    "#{@number}-#{@suite}"
+    "#{@number}----#{@suite}"
     # "#{@number} of #{@suite}"
   end
 
