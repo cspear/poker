@@ -77,7 +77,7 @@ class Hand
     if c == 5 then flush = true end
     if h == 5 then flush = true end
 
-    puts "flush says it is: #{flush}"
+    puts "flush: #{flush}"
 
     return flush
   end
@@ -109,7 +109,7 @@ class Hand
       straight = true
     end
 
-    puts "straight says it is: #{straight}"
+    puts "straight: #{straight}"
 
     return straight
   end
@@ -148,18 +148,18 @@ class Hand
       type = 'full house'
     end
 
-    puts "multi says it is: #{type}"
+    puts "multi: #{type}"
 
     return type
   end
 
   def do_i_have_ace(hand)
     ace = false
-    hand.each do |e|
-      if e.value == 14 then ace = true end
+    hand.each do |ea|
+      if ea.value == 14 then ace = true end
     end
 
-    puts "ace says it is: #{ace}"
+    puts "ace: #{ace}"
     return ace
   end
 
@@ -189,15 +189,23 @@ class Hand
     if straight && flush_type == nil then type = 'straight' end
     if type == '' then type = '-no rank-' end
     if type == nil then type = '-no rank-' end
+    if type == '-no rank-' && ace_type == true then type = 'ace-high' end
 
     # puts "type is: #{type}"
     print_hand_rank(hand, type)
+    # add logic to show winning hand.
   end
 
   def print_hand_rank(hand, rank)
-    puts "new hand:"
-    puts hand
-    puts "Rank is: #{rank}"
-    puts "------ "
+
+    print_hand = "HAND: "
+    hand.each do |ea|
+      print_hand = print_hand + " #{ea.number}-#{ea.suite}"
+    end
+
+    puts "------------------------------ "
+    puts print_hand
+    puts "RANK:  #{rank}"
+    puts "------------------------------ "
   end
 end

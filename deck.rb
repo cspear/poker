@@ -6,13 +6,11 @@ class Deck
 
   def initialize
     []
-    puts "[-created the deck-]"
     return @deck
   end
 
   def create_deck
     @deck = []
-    # @hand = []
     Card::SUITES.each do |suite|
       Card::NUMBERS.each_with_index do |number, value|
         value = value + 2
@@ -21,11 +19,7 @@ class Deck
     end
 
     @deck.shuffle!
-    print_deck(@deck)
 
-    # @hand << @deck.pop(5)
-    # print_deck(@hand)
-    puts "[-created the deck-]"
     return @deck
   end
 
@@ -37,12 +31,11 @@ class Deck
     @deck.length
   end
 
-  def deal_card(number=1)
-    @deck.pop(number)
-  end
+  # def deal_card(number=1)
+  #   @deck.pop(number)
+  # end
 
   def to_s
-    # "#{@deck}"
     "FROM DECK: #{card.number}:#{card.suite}=#{card.value}"
   end
 
@@ -52,8 +45,4 @@ class Deck
     end
   end
 
-# deck can only have 52 cards.
-# deck can only contain cards.
-# deck can not be 0 cards
-#
 end

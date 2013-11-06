@@ -22,11 +22,11 @@ describe "am_i_flush" do
 
   it "should be a flush" do
     ## need to pass in an object!!  unsure how to recreate for testing.
-    # @fixed_hand << [{:suite=>"diamonds", :number=>1}]
-    # @fixed_hand << [{:suite=>"diamonds", :number=>2}]
-    # @fixed_hand << [{:suite=>"diamonds", :number=>2}]
-    # @fixed_hand << [{:suite=>"diamonds", :number=>4}]
-    # @fixed_hand << [{:suite=>"diamonds", :number=>5}]
+    @fixed_hand << [{:suite=>:diamonds, :number=>:one, :value=>1}]
+    @fixed_hand << [{:suite=>:diamonds, :number=>:two, :value=>2}]
+    @fixed_hand << [{:suite=>:diamonds, :number=>:three, :value=>3}]
+    @fixed_hand << [{:suite=>:diamonds, :number=>:four, :value=>4}]
+    @fixed_hand << [{:suite=>:diamonds, :number=>:five, :value=>5}]
     test_hand = @th.am_i_flush(@fixed_hand)
 
     test_hand.should eql true

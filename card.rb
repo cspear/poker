@@ -4,6 +4,7 @@ class Card
 
   NUMBERS = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
   SUITES  = [:spades, :clubs, :diamonds, :hearts]
+  SHORT   = [:s, :c, :d, :h]
   VALUES  = [2..14]
 
   attr_reader :number, :suite, :value
@@ -15,14 +16,9 @@ class Card
   end
 
   def to_s
-    "FROM CARD: #{@number}:#{@suite}-#{@value}"
+    # "FROM CARD: #{@number}:#{@suite}-#{@value}"
+    "#{@number}-#{@suite}"
+    # "#{@number} of #{@suite}"
   end
 
-  # card must have a number, suite, and value
-  # card must have a number in numbers list
-  # card must have a suite in suites list
-  # card must have a value in values list
-  # card cannot have less than these 3 attributes.
-  # card cannot have more than these 3 attributes.
-  #
 end
