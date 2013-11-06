@@ -9,7 +9,7 @@
 require_relative 'deck'
 
 
-#remove (hand) items.
+#remove "(hand)" items on the end of the methods.
 class Hand
 
   attr_accessor :hand
@@ -27,7 +27,6 @@ class Hand
     "FROM HAND: #{card.number}:#{card.suite}=#{card.value}"
   end
 
-#### why can't i get at card.number or card.value?
   def hand_sort(hand)
     hand.sort_by {|k| k.value}
   end
@@ -37,7 +36,8 @@ class Hand
       hand.each do |e|
         nums_only << e.value
       end
-    return nums_only
+
+    nums_only
   end
 
   def hand_suites_only
@@ -45,7 +45,8 @@ class Hand
       hand.each do |e|
         suites_only << e.suite
       end
-    return nums_only
+
+    nums_only
   end
 
   def print_hand
@@ -77,12 +78,9 @@ class Hand
     if c == 5 then flush = true end
     if h == 5 then flush = true end
 
-    # puts "flush: #{flush}"
-
-    return flush
+    flush
   end
 
-#have to write tests to see if this is right.
   def am_i_a_straight(hand)
 
     value_sorted = hand_sort(hand)
@@ -108,13 +106,11 @@ class Hand
 
     if count_hits == 4 then straight = true end
 
-    return straight
+    straight
   end
 
   def am_i_multi_same(hand)
-
     nums_only = hand_numbers_only(hand)
-
     one_pair = nil
     two_pair = nil
     three_kind = nil
@@ -144,7 +140,7 @@ class Hand
       type = 'full house'
     end
 
-    return type
+    type
   end
 
   def do_i_have_ace(hand)
@@ -153,7 +149,7 @@ class Hand
       if ea.value == 14 then ace = true end
     end
 
-    return ace
+    ace
   end
 
   def rank_hand(hand)
@@ -186,7 +182,7 @@ class Hand
     if type == '-no rank-' && ace_type == true then type = 'ace-high' end
 
     print_hand_rank(hand, type)
-    return type
+    type
   end
 
   def print_hand_rank(hand, rank)

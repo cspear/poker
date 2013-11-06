@@ -8,7 +8,6 @@ class Play_rank
   end
 
   def is_straight(hand)
-    # puts hand
     straight = false
       sorted_hand = []
       hand.each do |card|
