@@ -3,23 +3,25 @@ require_relative '../deck'
 describe "create deck" do
   before(:each) do
     @testdeck = Deck.new
-    @deck = @testdeck.create_deck
+    # @deck = @testdeck.create_deck
     # puts "<< deck >> #{@deck}"
     # puts "<< testdeck >> #{@testdeck}"
   end
 
   it "should create 52 cards" do
-    @deck.count.should eql 52
+    # @testdeck.count.should eql 52
+    @testdeck.deck_size.should eql 52
   end
 
   it "should contain hearts" do
-    @deck.count(:hearts).should eql 1
-    #how do I get at each, to see if I have a ea.suite == 'hearts'
+    @testdeck.count_hearts.should eql 1
   end
 
-  it "should not contain other suites" do
-
+  it "should contain clubs" do
+    @testdeck.count_clubs.should eql 1
   end
+
+
 end
 
 describe "empty?" do

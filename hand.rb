@@ -5,6 +5,11 @@
 #
 # evaluate hands and rank them.
 
+#rake file
+#move all to card.
+#remove attr from card.
+#
+
 # create card
 require_relative 'deck'
 
@@ -19,31 +24,31 @@ class Hand
     #empty hand
   end
 
-  def deal_cards(deck, number=5)
-    deck.pop(number)
-  end
+  # def deal_cards(deck, number=5)
+  #   deck.pop(number)
+  # end
 
   def to_s
-    "FROM HAND: #{card.number}:#{card.suite}=#{card.value}"
+    "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
   end
 
-  def hand_sort(hand)
-    hand.sort_by {|k| k.value}
+  def hand_sort
+    @and.sort_by {|k| k.value}
   end
 
-  def hand_numbers_only(hand)
+  def hand_numbers_only
     nums_only = []
-      hand.each do |e|
+      @hand.each do |e|
         nums_only << e.value
       end
 
     nums_only
   end
 
-  def hand_suites_only
-    suites_only = []
-      hand.each do |e|
-        suites_only << e.suite
+  def hand_suits_only
+    suits_only = []
+      @hand.each do |e|
+        suits_only << e.suit
       end
 
     nums_only
@@ -51,7 +56,7 @@ class Hand
 
   def print_hand
     @hand.each do |card|
-      puts "#{card.number}:#{card.suite}=#{card.value}"
+      puts "#{card.number}:#{card.suit}=#{card.value}"
     end
   end
 
@@ -59,18 +64,18 @@ class Hand
     @hand.length
   end
 
-  def am_i_flush(hand)
+  def am_i_flush
     d = 0
     s = 0
     c = 0
     h = 0
     flush = false
 
-    hand.each do |e|
-      if e.suite == :diamonds then d = d + 1 end
-      if e.suite == :spades   then s = s + 1 end
-      if e.suite == :clubs    then c = c + 1 end
-      if e.suite == :hearts   then h = h + 1 end
+    @hand.each do |e|
+      if e.suit == :diamonds then d = d + 1 end
+      if e.suit == :spades   then s = s + 1 end
+      if e.suit == :clubs    then c = c + 1 end
+      if e.suit == :hearts   then h = h + 1 end
     end
 
     if d == 5 then flush = true end
@@ -81,9 +86,9 @@ class Hand
     flush
   end
 
-  def am_i_a_straight(hand)
+  def am_i_a_straight
 
-    value_sorted = hand_sort(hand)
+    value_sorted = hand_sort(@hand)
 
     count_hits = 0
     straight = false
@@ -109,8 +114,8 @@ class Hand
     straight
   end
 
-  def am_i_multi_same(hand)
-    nums_only = hand_numbers_only(hand)
+  def am_i_multi_same
+    nums_only = hand_numbers_only(@hand)
     one_pair = nil
     two_pair = nil
     three_kind = nil
@@ -143,24 +148,24 @@ class Hand
     type
   end
 
-  def do_i_have_ace(hand)
+  def do_i_have_ace
     ace = false
-    hand.each do |ea|
+    @hand.each do |ea|
       if ea.value == 14 then ace = true end
     end
 
     ace
   end
 
-  def rank_hand(hand)
+  def rank_hand
     done = false
 
-    ace_type = do_i_have_ace(hand)
+    ace_type = do_i_have_ace(@hand)
 
-    straight = am_i_a_straight(hand)
+    straight = am_i_a_straight(@hand)
     if straight then type = 'straight' end
 
-    flush_type = am_i_flush(hand)
+    flush_type = am_i_flush(@hand)
 
     if flush_type
       if straight
@@ -173,7 +178,7 @@ class Hand
         type = 'flush'
       end
     else
-      type = am_i_multi_same(hand)
+      type = am_i_multi_same(@hand)
     end
 
     if straight && flush_type == nil then type = 'straight' end
@@ -181,15 +186,15 @@ class Hand
     if type == nil then type = '-no rank-' end
     if type == '-no rank-' && ace_type == true then type = 'ace-high' end
 
-    print_hand_rank(hand, type)
+    print_hand_rank(@hand, type)
     type
   end
 
-  def print_hand_rank(hand, rank)
+  def print_hand_rank(rank)
 
     print_hand = "HAND: "
-    hand.each do |ea|
-      print_hand = print_hand + " #{ea.number}-#{ea.suite}"
+    @hand.each do |ea|
+      print_hand = print_hand + " #{ea.number}-#{ea.suit}"
     end
 
     puts "------------------------------ "
