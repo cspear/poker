@@ -21,19 +21,14 @@ class Hand
 
   def initialize
     @hand = hand
-    #empty hand
   end
-
-  # def deal_cards(deck, number=5)
-  #   deck.pop(number)
-  # end
 
   def to_s
     "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
   end
 
   def hand_sort
-    @and.sort_by {|k| k.value}
+    @hand.sort_by {|k| k.value}
   end
 
   def hand_numbers_only
@@ -88,7 +83,7 @@ class Hand
 
   def am_i_a_straight
 
-    value_sorted = hand_sort(@hand)
+    value_sorted = hand_sort
 
     count_hits = 0
     straight = false
@@ -115,7 +110,7 @@ class Hand
   end
 
   def am_i_multi_same
-    nums_only = hand_numbers_only(@hand)
+    nums_only = hand_numbers_only
     one_pair = nil
     two_pair = nil
     three_kind = nil
@@ -160,12 +155,12 @@ class Hand
   def rank_hand
     done = false
 
-    ace_type = do_i_have_ace(@hand)
+    ace_type = do_i_have_ace
 
-    straight = am_i_a_straight(@hand)
+    straight = am_i_a_straight
     if straight then type = 'straight' end
 
-    flush_type = am_i_flush(@hand)
+    flush_type = am_i_flush
 
     if flush_type
       if straight
@@ -178,7 +173,7 @@ class Hand
         type = 'flush'
       end
     else
-      type = am_i_multi_same(@hand)
+      type = am_i_multi_same
     end
 
     if straight && flush_type == nil then type = 'straight' end

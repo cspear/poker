@@ -15,19 +15,6 @@ class Deck
     @deck.shuffle!
   end
 
-  # def create_deck
-  #   @deck = []
-  #   Card::SUITES.each do |suite|
-  #     Card::NUMBERS.each_with_index do |number, value|
-  #       value = value + 2
-  #       @deck << Card.new(number, suite, value)
-  #     end
-  #   end
-
-  #   @deck.shuffle!
-
-  #   return @deck
-  # end
   def count_hearts
     puts @deck
     puts @deck.count(:hearts)

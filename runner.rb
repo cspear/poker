@@ -8,11 +8,11 @@ require_relative 'deck'
 
 @hand = Hand.new
 
-handone = @hand.deal_cards
-handtwo = @hand.deal_cards
-handthree = @hand.deal_cards
+@deck.deal_card
+# handtwo = @deck.deal_card
+# handthree = @deck.deal_card
 
-@hand.rank_hand(handone)
-@hand.rank_hand(handtwo)
-@hand.rank_hand(handthree)
+@hand.rank_hand
+# @hand.rank_hand(handtwo)
+# @hand.rank_hand(handthree)
 
