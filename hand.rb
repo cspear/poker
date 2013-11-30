@@ -1,16 +1,3 @@
-# require 'rubygems'
-# require 'logger'
-
-# Poker
-#
-# evaluate hands and rank them.
-
-#rake file
-#move all to card.
-#remove attr from card.
-#
-
-# create card
 require_relative 'deck'
 
 

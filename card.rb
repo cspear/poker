@@ -26,16 +26,13 @@ class Card
   end
 
   def what_suit_am_i?
-    if :spades   then spades
-    if :clubs    then clubs
-    if :diamonds then diamonds
-    if :hearts   then hearts
+    if :spades   then spades end
+    if :clubs    then clubs end
+    if :diamonds then diamonds end
+    if :hearts   then hearts end
   end
 
 
 
 
 end
-
-# why no methods
-#
