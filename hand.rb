@@ -17,18 +17,19 @@ require_relative 'deck'
 #remove "(hand)" items on the end of the methods.
 class Hand
 
-  attr_accessor :hand
+  attr_accessor :hand, :player_name
 
   def initialize
-    @hand = hand
+    @hand = []
+    @hand << Deck.new.deal_card(5)
+    #not working
+    @hand.sort_by {|k| @value}
+    puts @hand
+
   end
 
   def to_s
     "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
-  end
-
-  def hand_sort
-    @hand.sort_by {|k| k.value}
   end
 
   def hand_numbers_only
@@ -60,6 +61,7 @@ class Hand
   end
 
   def am_i_flush
+    #need to ask the card what suit it is.
     d = 0
     s = 0
     c = 0
@@ -83,16 +85,14 @@ class Hand
 
   def am_i_a_straight
 
-    value_sorted = hand_sort
-
     count_hits = 0
     straight = false
     previous = 0
     index = 0
-    value_sorted.each do |num|
+    @hand.each do |num|
 
       if index == 0
-        previous = num.value
+        previous = @value
       else
         if num.value == previous + 1
           count_hits = count_hits + 1
@@ -101,7 +101,7 @@ class Hand
         end
       end
       index = index + 1
-      previous = num.value
+      previous = @value
     end
 
     if count_hits == 4 then straight = true end
@@ -146,7 +146,8 @@ class Hand
   def do_i_have_ace
     ace = false
     @hand.each do |ea|
-      if ea.value == 14 then ace = true end
+      # puts ea
+      # ea.am_i_an_ace == 14 then ace = true end
     end
 
     ace

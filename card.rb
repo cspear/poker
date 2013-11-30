@@ -14,10 +14,26 @@ class Card
   end
 
   def to_s
-    # "FROM CARD: #{@number}:#{@suite}-#{@value}"
-    "#{@number} of #{@suit}"
-    # "#{@number} of #{@suite}"
+    "FROM CARD: #{@number} of #{@suit} with #{@value}"
   end
+
+  def am_i_an_ace?
+    if :ace
+      true
+    else
+      false
+    end
+  end
+
+  def what_suit_am_i?
+    if :spades   then spades
+    if :clubs    then clubs
+    if :diamonds then diamonds
+    if :hearts   then hearts
+  end
+
+
+
 
 end
 
