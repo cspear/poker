@@ -1,18 +1,22 @@
 require_relative 'deck'
+# problem 1: array or arrays.  finally figured out that I was << instead of =
+#                              to create the hand.
+# yet to solve: only want 1 deck, but want hand to not crash on initialize if
+#               @deck doesn't exist.
+#
 
 
-#remove "(hand)" items on the end of the methods.
 class Hand
 
-  attr_accessor :hand, :player_name
+  attr_accessor :hand, :player_name, :card
 
-  def initialize
+  def initialize(name)
     @hand = []
-    @hand << Deck.new.deal_card(5)
-    #not working
-    @hand.sort_by {|k| @value}
-    puts @hand
+    @hand = Deck.new.deal_card(5)
 
+    @hand.sort_by! { |k| k.value }
+
+    @player_name = name
   end
 
   def to_s
@@ -24,7 +28,6 @@ class Hand
       @hand.each do |e|
         nums_only << e.value
       end
-
     nums_only
   end
 
@@ -79,7 +82,7 @@ class Hand
     @hand.each do |num|
 
       if index == 0
-        previous = @value
+        previous = num.value
       else
         if num.value == previous + 1
           count_hits = count_hits + 1
@@ -88,7 +91,7 @@ class Hand
         end
       end
       index = index + 1
-      previous = @value
+      previous = num.value
     end
 
     if count_hits == 4 then straight = true end
@@ -169,20 +172,36 @@ class Hand
     if type == nil then type = '-no rank-' end
     if type == '-no rank-' && ace_type == true then type = 'ace-high' end
 
-    print_hand_rank(@hand, type)
+    print_hand_rank(type)
     type
   end
 
   def print_hand_rank(rank)
-
     print_hand = "HAND: "
     @hand.each do |ea|
-      print_hand = print_hand + " #{ea.number}-#{ea.suit}"
+      print_hand = print_hand + " #{ea.short_num}#{ea.short_suit}"
     end
 
     puts "------------------------------ "
+    puts "player: #{@player_name}"
     puts print_hand
     puts "RANK:  #{rank}"
     puts "------------------------------ "
+  end
+
+  def count_hearts
+    @hand.count(:hearts)
+  end
+
+  def count_spades
+    @hand.count(:spades)
+  end
+
+  def count_clubs
+    @hand.count(:clubs)
+  end
+
+  def count_diamonds
+    @hand.count('diamonds')
   end
 end

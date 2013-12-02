@@ -1,38 +1,41 @@
 class Card
 
-  NUMBERS = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
-  SUITS  =  [:spades, :clubs, :diamonds, :hearts]
-  SHORT   = [:s, :c, :d, :h]
-  VALUES  = [2..14]
-
+  NUMBERS       = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
+  VALUES        = [2..14]
+  SHORT_NUM     = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+  SUITS         = [:spades, :clubs, :diamonds, :hearts]
+  SHORT_SUIT    = [:S, :C, :D, :H]
   attr_reader :number, :suit, :value
 
-  def initialize(number, suit, value)
-    @number = number
-    @suit   = suit
-    @value  = value
+  def initialize(number, suit, value, short_suit, short_num)
+    @number     = number
+    @suit       = suit
+    @value      = value
+    @short_suit = short_suit
+    @short_num  = short_num
   end
 
   def to_s
     "FROM CARD: #{@number} of #{@suit} with #{@value}"
   end
 
-  def am_i_an_ace?
-    if :ace
-      true
-    else
-      false
-    end
+  def number
+    @number
   end
 
-  def what_suit_am_i?
-    if :spades   then spades end
-    if :clubs    then clubs end
-    if :diamonds then diamonds end
-    if :hearts   then hearts end
+  def suit
+    @suit
   end
 
+  def value
+    @value
+  end
 
+  def short_num
+    @short_num
+  end
 
-
+  def short_suit
+    @short_suit
+  end
 end

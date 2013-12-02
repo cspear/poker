@@ -6,32 +6,13 @@ class Deck
 
   def initialize
     @deck = []
-    Card::SUITS.each do |suit|
-      Card::NUMBERS.each_with_index do |number, value|
-        value = value + 2
-        @deck << Card.new(number, suit, value)
+    Card::SUITS.each_with_index do |suit, i_suit|
+      Card::NUMBERS.each_with_index do |number, i_number|
+        card_value = i_number + 2
+        @deck << Card.new(number, suit, card_value, Card::SHORT_SUIT[i_suit], Card::SHORT_NUM[i_number])
       end
     end
     @deck.shuffle!
-  end
-
-  def count_hearts
-    puts @deck
-    puts @deck.count(:hearts)
-    puts @deck.count('2')
-    @deck.count(:hearts)
-  end
-
-  def count_spades
-    @deck.count(:spades)
-  end
-
-  def count_clubs
-    @deck.count(:clubs)
-  end
-
-  def count_diamonds
-    @deck.count(:diamonds)
   end
 
   def empty?
