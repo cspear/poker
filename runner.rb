@@ -3,10 +3,12 @@
 require_relative 'hand'
 require_relative 'deck'
 
+hand_size = 5
+
 players = ['charlie', 'jeff', 'adam', 'bud']
 
 players.each do |name|
-  player_hand = Hand.new(name)
+  player_hand = Hand.new(name, hand_size)
   results = player_hand.rank_hand
 end
 

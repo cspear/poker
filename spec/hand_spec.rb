@@ -14,30 +14,32 @@ require_relative '../hand'
 # end
 
 describe "am_i_flush" do
-
   before(:each) do
-    @hand = Hand.new
+    @testhand = Hand.new('testuser', 0)
+    @testhand.print_hand
   end
 
   it "should be a flush" do
-    @testhand = []
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    # ?? WHY can't I add Card objects here like I do in the code??
+    puts Card.new(:two, :diamonds, 2, :D, '2')
 
-    @hand.am_i_flush(@testhand).should eql true
+    @testhand << Card.new(:two, :diamonds, 2, :D, '2')
+    @testhand.print_hand
+    @testhand << Card.new(:three, :diamonds, 3, :D, '3')
+    @testhand << Card.new(:four, :diamonds, 4, :D, '4')
+    @testhand << Card.new(:five, :diamonds, 5, :D, '5')
+    @testhand << Card.new(:jack, :diamonds, 11, :D, 'J')
+
+    @testhand.am_i_flush.should eql true
   end
 end
 
 describe "am_i_a_straight" do
   before(:each) do
-    @hand = Hand.new
+    @testhand = Hand.new('testuser', 0)
   end
 
   it "should be a straight" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:three, :clubs, 3)
     @testhand << Card.new(:four, :diamonds, 4)
@@ -50,11 +52,10 @@ end
 
 describe "am_i_multi_same" do
   before(:each) do
-    @hand = Hand.new
+    @testhand = Hand.new('testuser', 0)
   end
 
   it "should be ONE PAIR" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:four, :diamonds, 4)
@@ -64,9 +65,7 @@ describe "am_i_multi_same" do
     @hand.am_i_multi_same(@testhand).should eql 'one pair'
   end
 
-
   it "should be a TWO PAIR" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:three, :diamonds, 3)
@@ -76,9 +75,7 @@ describe "am_i_multi_same" do
     @hand.am_i_multi_same(@testhand).should eql 'two pair'
   end
 
-
   it "should be a THREE OF A KIND" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:two, :hearts, 2)
@@ -88,9 +85,7 @@ describe "am_i_multi_same" do
     @hand.am_i_multi_same(@testhand).should eql 'three of a kind'
   end
 
-
   it "should be FOUR OF A KIND" do
-    @testhand = []
     @testhand << Card.new(:nine, :diamonds, 9)
     @testhand << Card.new(:nine, :clubs, 9)
     @testhand << Card.new(:nine, :hearts, 9)
@@ -102,9 +97,7 @@ describe "am_i_multi_same" do
     test_hand.should eql 'four of a kind'
   end
 
-
   it "should be FULL HOUSE" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:three, :diamonds, 3)
@@ -116,9 +109,7 @@ describe "am_i_multi_same" do
     test_hand.should eql 'full house'
   end
 
-
   it "should NOT be a multi" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:three, :diamonds, 3)
     @testhand << Card.new(:four, :diamonds, 4)
@@ -137,7 +128,6 @@ describe "do_i_have_ace" do
   end
 
   it "should have an ACE" do
-    @testhand = []
     @testhand << Card.new(:two, :diamonds, 2)
     @testhand << Card.new(:two, :clubs, 2)
     @testhand << Card.new(:four, :diamonds, 4)

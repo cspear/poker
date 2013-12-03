@@ -1,27 +1,21 @@
 require_relative 'deck'
-# problem 1: array or arrays.  finally figured out that I was << instead of =
-#                              to create the hand.
-# yet to solve: only want 1 deck, but want hand to not crash on initialize if
-#               @deck doesn't exist.
-#
-
 
 class Hand
 
-  attr_accessor :hand, :player_name, :card
+  attr_accessor :hand, :card
 
-  def initialize(name)
+  def initialize(name, hand_size)
     @hand = []
-    @hand = Deck.new.deal_card(5)
+    @hand = Deck.new.deal_card(hand_size)
 
     @hand.sort_by! { |k| k.value }
 
     @player_name = name
   end
 
-  def to_s
-    "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
-  end
+  # def to_s
+  #   "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
+  # end
 
   def hand_numbers_only
     nums_only = []
