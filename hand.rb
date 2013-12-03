@@ -4,22 +4,26 @@ class Hand
 
   attr_accessor :hand, :card
 
-  def initialize(name, hand_size)
-    @hand = []
-    @hand = Deck.new.deal_card(hand_size)
-
-    @hand.sort_by! { |k| k.value }
-
-    @player_name = name
+  def initialize(cards)
+    @cards = cards
   end
 
-  # def to_s
-  #   "FROM HAND: #{card.number}:#{card.suit}=#{card.value}"
-  # end
+  def create(player_name, hand_size, deck)
+    @player_cards = []
+    @player_cards = deck.deal_card(hand_size)
+  end
+
+  def player_name
+    @player_name
+  end
+
+  def sort!
+    @cards.sort_by! { |k| k.value }
+  end
 
   def hand_numbers_only
     nums_only = []
-      @hand.each do |e|
+      @cards.each do |e|
         nums_only << e.value
       end
     nums_only
@@ -27,7 +31,7 @@ class Hand
 
   def hand_suits_only
     suits_only = []
-      @hand.each do |e|
+      @cards.each do |e|
         suits_only << e.suit
       end
 
@@ -35,13 +39,13 @@ class Hand
   end
 
   def print_hand
-    @hand.each do |card|
+    @cards.each do |card|
       puts "#{card.number}:#{card.suit}=#{card.value}"
     end
   end
 
   def hand_cards_count
-    @hand.length
+    @cards.length
   end
 
   def am_i_flush
@@ -52,7 +56,7 @@ class Hand
     h = 0
     flush = false
 
-    @hand.each do |e|
+    @cards.each do |e|
       if e.suit == :diamonds then d = d + 1 end
       if e.suit == :spades   then s = s + 1 end
       if e.suit == :clubs    then c = c + 1 end
@@ -73,7 +77,7 @@ class Hand
     straight = false
     previous = 0
     index = 0
-    @hand.each do |num|
+    @cards.each do |num|
 
       if index == 0
         previous = num.value
@@ -129,7 +133,7 @@ class Hand
 
   def do_i_have_ace
     ace = false
-    @hand.each do |ea|
+    @cards.each do |ea|
       # puts ea
       # ea.am_i_an_ace == 14 then ace = true end
     end
@@ -172,7 +176,7 @@ class Hand
 
   def print_hand_rank(rank)
     print_hand = "HAND: "
-    @hand.each do |ea|
+    @cards.each do |ea|
       print_hand = print_hand + " #{ea.short_num}#{ea.short_suit}"
     end
 
@@ -184,18 +188,18 @@ class Hand
   end
 
   def count_hearts
-    @hand.count(:hearts)
+    @cards.count(:hearts)
   end
 
   def count_spades
-    @hand.count(:spades)
+    @cards.count(:spades)
   end
 
   def count_clubs
-    @hand.count(:clubs)
+    @cards.count(:clubs)
   end
 
   def count_diamonds
-    @hand.count('diamonds')
+    @cards.count('diamonds')
   end
 end

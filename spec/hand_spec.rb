@@ -23,12 +23,15 @@ describe "am_i_flush" do
     # ?? WHY can't I add Card objects here like I do in the code??
     puts Card.new(:two, :diamonds, 2, :D, '2')
 
-    @testhand << Card.new(:two, :diamonds, 2, :D, '2')
-    @testhand.print_hand
-    @testhand << Card.new(:three, :diamonds, 3, :D, '3')
-    @testhand << Card.new(:four, :diamonds, 4, :D, '4')
-    @testhand << Card.new(:five, :diamonds, 5, :D, '5')
-    @testhand << Card.new(:jack, :diamonds, 11, :D, 'J')
+    @cards = []
+    @cards << Card.new(:two, :diamonds, 2, :D, '2')
+    @cards.print_hand
+    @cards << Card.new(:three, :diamonds, 3, :D, '3')
+    @cards << Card.new(:four, :diamonds, 4, :D, '4')
+    @cards << Card.new(:five, :diamonds, 5, :D, '5')
+    @cards << Card.new(:jack, :diamonds, 11, :D, 'J')
+
+    @testhand = Hand.new(@cards)
 
     @testhand.am_i_flush.should eql true
   end

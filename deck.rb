@@ -2,16 +2,15 @@ require_relative 'card'
 
 class Deck
 
-  attr_accessor :deck
+  attr_reader :cards
 
-  def initialize
-    @deck = []
-    Card::SUITS.each_with_index do |suit, i_suit|
-      Card::NUMBERS.each_with_index do |number, i_number|
-        card_value = i_number + 2
-        @deck << Card.new(number, suit, card_value, Card::SHORT_SUIT[i_suit], Card::SHORT_NUM[i_number])
-      end
-    end
+
+  def initialize(cards)
+    @cards = cards
+    puts @cards
+  end
+
+  def shuffle!
     @deck.shuffle!
   end
 
@@ -23,13 +22,18 @@ class Deck
     @deck.length
   end
 
-  def deal_card(number=1)
+  def deal_cards(number=1)
     @deck.pop(number)
+
+    # @deck.each do |card|
+    #   p card
+    # end
+  
   end
 
-  def to_s
-    "FROM DECK: #{card.number}:#{card.suit}=#{card.value}"
-  end
+  # def to_s
+  #   "FROM DECK: #{card.number}:#{card.suit}=#{card.value}"
+  # end
 
   def print_deck(deck)
     deck.each do |card|
