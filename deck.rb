@@ -2,33 +2,21 @@ require_relative 'card'
 
 class Deck
 
-  attr_reader :cards
-
-
   def initialize(cards)
     @cards = cards
-    puts @cards
-  end
-
-  def shuffle!
-    @deck.shuffle!
+    @cards.shuffle!
   end
 
   def empty?
-    @deck.empty?
+    @cards.empty?
   end
 
   def deck_size
-    @deck.length
+    @cards.length
   end
 
   def deal_cards(number=1)
-    @deck.pop(number)
-
-    # @deck.each do |card|
-    #   p card
-    # end
-  
+    @cards.pop(number)
   end
 
   # def to_s

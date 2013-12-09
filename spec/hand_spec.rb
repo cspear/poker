@@ -1,171 +1,175 @@
 require_relative '../hand'
 
-
-# describe "deal_cards" do
-# end
-
-# describe "hand_sort" do
-# end
-
-# describe "hand_numbers_only" do
-# end
-
-# describe "hand_suites_only" do
-# end
-
 describe "am_i_flush" do
   before(:each) do
-    @testhand = Hand.new('testuser', 0)
-    @testhand.print_hand
+    @testcards = []
   end
 
   it "should be a flush" do
-    # ?? WHY can't I add Card objects here like I do in the code??
-    puts Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:three, :diamonds, 3, :D, '3')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
 
-    @cards = []
-    @cards << Card.new(:two, :diamonds, 2, :D, '2')
-    @cards.print_hand
-    @cards << Card.new(:three, :diamonds, 3, :D, '3')
-    @cards << Card.new(:four, :diamonds, 4, :D, '4')
-    @cards << Card.new(:five, :diamonds, 5, :D, '5')
-    @cards << Card.new(:jack, :diamonds, 11, :D, 'J')
-
-    @testhand = Hand.new(@cards)
-
+    @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_flush.should eql true
+  end
+
+  it "should NOT be a flush" do
+    @testcards << Card.new(:two, :hearts, 2, :D, '2')
+    @testcards << Card.new(:three, :diamonds, 3, :D, '3')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
+
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_flush.should eql false
   end
 end
 
 describe "am_i_a_straight" do
   before(:each) do
-    @testhand = Hand.new('testuser', 0)
+    @testcards = []
   end
 
   it "should be a straight" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :clubs, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:six, :diamonds, 6)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:three, :clubs, 3, :C, '3')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:six, :diamonds, 6, :D, '6')
 
-    @hand.am_i_a_straight(@testhand).should eql true
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_a_straight.should eql true
+  end
+
+  it "should NOT be a straight" do
+    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
+    @testcards << Card.new(:three, :clubs, 3, :C, '3')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:six, :diamonds, 6, :D, '6')
+
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_a_straight.should eql false
   end
 end
 
 describe "am_i_multi_same" do
   before(:each) do
-    @testhand = Hand.new('testuser', 0)
+    @testcards = []
   end
 
   it "should be ONE PAIR" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:two, :clubs, 2)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :clubs, 2, :C, '2')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:eleven, :diamonds, 11, :D, '5')
 
-    @hand.am_i_multi_same(@testhand).should eql 'one pair'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql 'one pair'
   end
 
   it "should be a TWO PAIR" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:two, :clubs, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:three, :clubs, 3)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :clubs, 2, :C, '2')
+    @testcards << Card.new(:three, :diamonds, 3, :D, '3')
+    @testcards << Card.new(:three, :clubs, 3, :C, '3')
+    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
 
-    @hand.am_i_multi_same(@testhand).should eql 'two pair'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql 'two pair'
   end
 
   it "should be a THREE OF A KIND" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:two, :clubs, 2)
-    @testhand << Card.new(:two, :hearts, 2)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :clubs, 2, :C, '2')
+    @testcards << Card.new(:two, :hearts, 2, :H, '2')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
 
-    @hand.am_i_multi_same(@testhand).should eql 'three of a kind'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql 'three of a kind'
   end
 
   it "should be FOUR OF A KIND" do
-    @testhand << Card.new(:nine, :diamonds, 9)
-    @testhand << Card.new(:nine, :clubs, 9)
-    @testhand << Card.new(:nine, :hearts, 9)
-    @testhand << Card.new(:nine, :spades, 9)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testcards << Card.new(:nine, :diamonds, 9, :d, '9')
+    @testcards << Card.new(:nine, :clubs, 9, :C, '9')
+    @testcards << Card.new(:nine, :hearts, 9, :H, '9')
+    @testcards << Card.new(:nine, :spades, 9, :S, '9')
+    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql 'four of a kind'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql 'four of a kind'
   end
 
   it "should be FULL HOUSE" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:two, :clubs, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:three, :clubs, 3)
-    @testhand << Card.new(:three, :hearts, 3)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :clubs, 2, :C, '2')
+    @testcards << Card.new(:three, :diamonds, 3, :D, '3')
+    @testcards << Card.new(:three, :clubs, 3, :C, '3')
+    @testcards << Card.new(:three, :hearts, 3, :H, '3')
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql 'full house'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql 'full house'
   end
 
   it "should NOT be a multi" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:three, :diamonds, 3)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:eleven, :diamonds, 11)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:three, :diamonds, 3, :D, '3')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
 
-    test_hand = @hand.am_i_multi_same(@testhand)
-
-    test_hand.should eql nil
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.am_i_multi_same[0].should eql nil
   end
 end
 
 describe "do_i_have_ace" do
   before(:each) do
-    @hand = Hand.new
+    @testcards = []
   end
 
   it "should have an ACE" do
-    @testhand << Card.new(:two, :diamonds, 2)
-    @testhand << Card.new(:two, :clubs, 2)
-    @testhand << Card.new(:four, :diamonds, 4)
-    @testhand << Card.new(:five, :diamonds, 5)
-    @testhand << Card.new(:ace, :diamonds, 14)
+    @testcards << Card.new(:two, :diamonds, 2, :D, '2')
+    @testcards << Card.new(:two, :clubs, 2, :C, '2')
+    @testcards << Card.new(:four, :diamonds, 4, :D, '4')
+    @testcards << Card.new(:five, :diamonds, 5, :D, '5')
+    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
 
-    @hand.do_i_have_ace(@testhand).should eql true
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.do_i_have_ace.should eql true
   end
 end
 
 describe "rank_hand" do
   before(:each) do
-    @hand = Hand.new
+    @testcards = []
   end
 
   it "should have be a ROYAL FLUSH" do
-    @testhand = []
-    @testhand << Card.new(:ace, :diamonds, 14)
-    @testhand << Card.new(:king, :diamonds, 13)
-    @testhand << Card.new(:queen, :diamonds, 12)
-    @testhand << Card.new(:jack, :diamonds, 11)
-    @testhand << Card.new(:ten, :diamonds, 10)
+    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
+    @testcards << Card.new(:king, :diamonds, 13, :D, '13')
+    @testcards << Card.new(:queen, :diamonds, 12, :D, '12')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:ten, :diamonds, 10, :D, '10')
 
-    @hand.rank_hand(@testhand).should eql 'royal flush'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.rank_hand[1].should eql 'royal flush'
   end
 
   it "should have be a STRAIGHT FLUSH" do
-    @testhand = []
-    @testhand << Card.new(:nine, :diamonds, 9)
-    @testhand << Card.new(:king, :diamonds, 13)
-    @testhand << Card.new(:queen, :diamonds, 12)
-    @testhand << Card.new(:jack, :diamonds, 11)
-    @testhand << Card.new(:ten, :diamonds, 10)
+    @testcards << Card.new(:nine, :diamonds, 9, :D, '9')
+    @testcards << Card.new(:king, :diamonds, 13, :D, '13')
+    @testcards << Card.new(:queen, :diamonds, 12, :D, '12')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:ten, :diamonds, 10, :D, '10')
 
-    @hand.rank_hand(@testhand).should eql 'straight flush'
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.rank_hand[1].should eql 'straight flush'
   end
 end
 

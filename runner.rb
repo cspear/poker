@@ -4,30 +4,33 @@ require_relative 'hand'
 require_relative 'deck'
 require_relative 'card'
 
-hand_size = 5
-
 the_deck = Deck.new(Card.all_cards)
-p the_deck
 
-
-
-# if Deck is a deck and not an array, how do I manipulate the card objects in the deck object.
-
-players = ['charlie', 'jeff', 'adam', 'bud']
+players = ['charlie', 'jeff', 'adam', 'foo', 'bar', 'ruby']
+last_hand_rank = 0
+winner = 'nobody'
 
 players.each do |name|
-  player_cards = []
-  player_cards = the_deck.deal_cards(5)
-  player_hand = Hand.new(player_cards)
-  results = player_hand.rank_hand
+  puts ' '
+  each_player_cards = []
+  each_player_cards = the_deck.deal_cards(5)
+  player_hand = Hand.new(name, each_player_cards)
+  returned = player_hand.rank_hand
+  current_rank = returned[0]
+  if current_rank > last_hand_rank
+    winner = name
+    last_hand_rank = current_rank
+  elsif current_rank == last_hand_rank
+    winner = winner + ' and ' + name
+    last_hand_rank = current_rank
+  end
+
 end
+puts " "
+puts "Congratulations: #{winner} (hand rank of: #{last_hand_rank})"
 
 
+puts " "
+puts " "
+# test = Card.new(:joker, :diamonds, 15, :D, '15')
 
-
-#next:
-# 1. determine winner.  (rank the ranks)
-# 2. clean up ranking, figure a better way to assess by looking at CARDS not HAND
-# 3.
-# 4.
-# 5.
