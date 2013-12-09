@@ -45,7 +45,7 @@ describe "am_i_a_straight" do
   end
 
   it "should NOT be a straight" do
-    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
+    @testcards << Card.new(:ace, :diamonds, 14, :D, 'A')
     @testcards << Card.new(:three, :clubs, 3, :C, '3')
     @testcards << Card.new(:four, :diamonds, 4, :D, '4')
     @testcards << Card.new(:five, :diamonds, 5, :D, '5')
@@ -66,7 +66,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:two, :clubs, 2, :C, '2')
     @testcards << Card.new(:four, :diamonds, 4, :D, '4')
     @testcards << Card.new(:five, :diamonds, 5, :D, '5')
-    @testcards << Card.new(:eleven, :diamonds, 11, :D, '5')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, '5')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_multi_same[0].should eql 'one pair'
@@ -77,7 +77,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:two, :clubs, 2, :C, '2')
     @testcards << Card.new(:three, :diamonds, 3, :D, '3')
     @testcards << Card.new(:three, :clubs, 3, :C, '3')
-    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_multi_same[0].should eql 'two pair'
@@ -88,18 +88,18 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:two, :clubs, 2, :C, '2')
     @testcards << Card.new(:two, :hearts, 2, :H, '2')
     @testcards << Card.new(:five, :diamonds, 5, :D, '5')
-    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_multi_same[0].should eql 'three of a kind'
   end
 
   it "should be FOUR OF A KIND" do
-    @testcards << Card.new(:nine, :diamonds, 9, :d, '9')
+    @testcards << Card.new(:nine, :diamonds, 9, :D, '9')
     @testcards << Card.new(:nine, :clubs, 9, :C, '9')
     @testcards << Card.new(:nine, :hearts, 9, :H, '9')
     @testcards << Card.new(:nine, :spades, 9, :S, '9')
-    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_multi_same[0].should eql 'four of a kind'
@@ -121,7 +121,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:three, :diamonds, 3, :D, '3')
     @testcards << Card.new(:four, :diamonds, 4, :D, '4')
     @testcards << Card.new(:five, :diamonds, 5, :D, '5')
-    @testcards << Card.new(:eleven, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.am_i_multi_same[0].should eql nil
@@ -138,7 +138,7 @@ describe "do_i_have_ace" do
     @testcards << Card.new(:two, :clubs, 2, :C, '2')
     @testcards << Card.new(:four, :diamonds, 4, :D, '4')
     @testcards << Card.new(:five, :diamonds, 5, :D, '5')
-    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
+    @testcards << Card.new(:ace, :diamonds, 14, :D, 'A')
 
     @testhand = Hand.new('testhand', @testcards)
     @testhand.do_i_have_ace.should eql true
@@ -151,10 +151,10 @@ describe "rank_hand" do
   end
 
   it "should have be a ROYAL FLUSH" do
-    @testcards << Card.new(:ace, :diamonds, 14, :D, '14')
-    @testcards << Card.new(:king, :diamonds, 13, :D, '13')
-    @testcards << Card.new(:queen, :diamonds, 12, :D, '12')
-    @testcards << Card.new(:jack, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:ace, :diamonds, 14, :D, 'A')
+    @testcards << Card.new(:king, :diamonds, 13, :D, 'K')
+    @testcards << Card.new(:queen, :diamonds, 12, :D, 'Q')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
     @testcards << Card.new(:ten, :diamonds, 10, :D, '10')
 
     @testhand = Hand.new('testhand', @testcards)
@@ -163,9 +163,9 @@ describe "rank_hand" do
 
   it "should have be a STRAIGHT FLUSH" do
     @testcards << Card.new(:nine, :diamonds, 9, :D, '9')
-    @testcards << Card.new(:king, :diamonds, 13, :D, '13')
-    @testcards << Card.new(:queen, :diamonds, 12, :D, '12')
-    @testcards << Card.new(:jack, :diamonds, 11, :D, '11')
+    @testcards << Card.new(:king, :diamonds, 13, :D, 'K')
+    @testcards << Card.new(:queen, :diamonds, 12, :D, 'Q')
+    @testcards << Card.new(:jack, :diamonds, 11, :D, 'J')
     @testcards << Card.new(:ten, :diamonds, 10, :D, '10')
 
     @testhand = Hand.new('testhand', @testcards)

@@ -6,7 +6,7 @@ require_relative 'card'
 
 the_deck = Deck.new(Card.all_cards)
 
-players = ['charlie', 'jeff', 'adam', 'foo', 'bar', 'ruby']
+players = ['Charlie', 'Jeff', 'Adam', 'Foo', 'Bar', 'Maggie']
 last_hand_rank = 0
 winner = 'nobody'
 

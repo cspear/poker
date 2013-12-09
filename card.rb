@@ -21,6 +21,7 @@ class Card
       puts "card invalid: #{number}, #{suit}, #{value}, #{short_suit}, #{short_num}"
       raise
     end
+
   end
 
   def to_s
