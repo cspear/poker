@@ -33,7 +33,6 @@ class Hand
       @cards.each do |e|
         suits_only << e.suit
       end
-
     nums_only
   end
 
@@ -47,7 +46,7 @@ class Hand
     @cards.length
   end
 
-  def am_i_flush
+  def a_flush?
     #need to ask the card what suit it is.
     d = 0
     s = 0
@@ -70,7 +69,7 @@ class Hand
     flush
   end
 
-  def am_i_a_straight
+  def a_straight?
     count_hits = 0
     straight = false
     previous = 0
@@ -140,23 +139,25 @@ class Hand
     return type, rank
   end
 
-  def do_i_have_ace
+  def have_an_ace?
     ace = false
-    @cards.each do |ea|
-      if ea.value == 14 then ace = true end
+    @cards.each do |card|
+      if card.am_i_an_ace?(card) == true then ace = true end
     end
+# @cards.any? &:ace?
+# @cards.any? { |card| card.ace? }
     ace
   end
 
   def rank_hand
     done = false
 
-    ace_type = do_i_have_ace
-    straight = am_i_a_straight
+    ace_type = have_an_ace?
+    straight = a_straight?
 
     if straight then type = 'straight' end
 
-    flush_type = am_i_flush
+    flush_type = a_flush?
 
     if flush_type
       if straight
@@ -213,18 +214,19 @@ class Hand
   end
 
   def count_hearts
-    @cards.count(:hearts)
+    puts @cards
+    @cards.count{|x| x.eql? :hearts}
   end
 
   def count_spades
-    @cards.count(:spades)
+    @cards.count{|x| x.eql? :spades}
   end
 
   def count_clubs
-    @cards.count(:clubs)
+    @cards.count{|x| x.eql? :clubs}
   end
 
   def count_diamonds
-    @cards.count(:diamonds)
+    @cards.count{|x| x.eql? :diamonds}
   end
 end

@@ -31,6 +31,6 @@ puts "Congratulations: #{winner} (hand rank of: #{last_hand_rank})"
 
 
 puts " "
-puts " "
-# test = Card.new(:joker, :diamonds, 15, :D, '15')
+# puts " "
+# test = Card.new(:joker, :diamonds)
 
