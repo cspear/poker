@@ -44,6 +44,17 @@ describe "a_straight?" do
     @testhand.a_straight?.should eql true
   end
 
+  it "should also be a straight" do
+    @testcards << Card.new(:six, :diamonds)
+    @testcards << Card.new(:three, :clubs)
+    @testcards << Card.new(:four, :diamonds)
+    @testcards << Card.new(:five, :diamonds)
+    @testcards << Card.new(:two, :diamonds)
+
+    @testhand = Hand.new('testhand', @testcards)
+    @testhand.a_straight?.should eql true
+  end
+
   it "should NOT be a straight" do
     @testcards << Card.new(:ace, :diamonds)
     @testcards << Card.new(:three, :clubs)
@@ -186,30 +197,30 @@ describe "rank_hand" do
   end
 end
 
-describe "test counting cards" do
-  before(:each) do
-    @testcards = []
-  end
+# describe "test counting cards" do
+#   before(:each) do
+#     @testcards = []
+#   end
 
-  it "test 1" do
-    @testcards << Card.new(:ace, :diamonds)
-    @testcards << Card.new(:king, :diamonds)
-    @testcards << Card.new(:queen, :diamonds)
-    @testcards << Card.new(:jack, :diamonds)
-    @testcards << Card.new(:ten, :diamonds)
+#   it "test 1" do
+#     @testcards << Card.new(:ace, :diamonds)
+#     @testcards << Card.new(:king, :diamonds)
+#     @testcards << Card.new(:queen, :diamonds)
+#     @testcards << Card.new(:jack, :diamonds)
+#     @testcards << Card.new(:ten, :diamonds)
 
-    @testhand = Hand.new('testhand', @testcards)
-    @testhand.count_hearts.should eql 0
-  end
+#     @testhand = Hand.new('testhand', @testcards)
+#     @testhand.count_hearts.should eql 0
+#   end
 
-  it "test 2" do
-    @testcards << Card.new(:nine, :diamonds)
-    @testcards << Card.new(:king, :diamonds)
-    @testcards << Card.new(:queen, :diamonds)
-    @testcards << Card.new(:jack, :diamonds)
-    @testcards << Card.new(:ten, :diamonds)
+#   it "test 2" do
+#     @testcards << Card.new(:nine, :diamonds)
+#     @testcards << Card.new(:king, :diamonds)
+#     @testcards << Card.new(:queen, :diamonds)
+#     @testcards << Card.new(:jack, :diamonds)
+#     @testcards << Card.new(:ten, :diamonds)
 
-    @testhand = Hand.new('testhand', @testcards)
-    @testhand.count_diamonds.should eql 5
-  end
-end
+#     @testhand = Hand.new('testhand', @testcards)
+#     @testhand.count_diamonds.should eql 5
+#   end
+# end

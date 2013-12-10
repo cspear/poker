@@ -74,19 +74,19 @@ class Hand
     straight = false
     previous = 0
     index = 0
-    @cards.each do |num|
 
+    @cards.each do |card|
       if index == 0
-        previous = num.value
+        previous = card.value
       else
-        if num.value == previous + 1
+        if card.value == previous + 1
           count_hits = count_hits + 1
         else
           straight = false
         end
       end
       index = index + 1
-      previous = num.value
+      previous = card.value
     end
 
     if count_hits == 4 then straight = true end
@@ -103,16 +103,16 @@ class Hand
     type = nil
     rank = nil
 
-    (1..13).each do |ea|
-      if nums_only.count(ea) == 4 then
+    (1..13).each do |num|
+      if nums_only.count(num) == 4 then
         type = 'four of a kind'
         rank = 8
-      elsif nums_only.count(ea) == 3 then
+      elsif nums_only.count(num) == 3 then
         type = 'three of a kind'
         three_kind = true
         rank = 4
-      elsif nums_only.count(ea) == 2 then
-        if one_pair == true then
+      elsif nums_only.count(num) == 2 then
+        if one_pair then
           two_pair = true
           one_pair = false
         else
@@ -142,14 +142,17 @@ class Hand
   def have_an_ace?
     ace = false
     @cards.each do |card|
-      if card.am_i_an_ace?(card) == true then ace = true end
+      if card.am_i_an_ace?(card) then ace = true end
     end
+    # note: passed 'card' because @card is not known in card.class, only @cards.
+
 # @cards.any? &:ace?
 # @cards.any? { |card| card.ace? }
     ace
   end
 
   def rank_hand
+    flush_type = false
     done = false
 
     ace_type = have_an_ace?
@@ -178,7 +181,7 @@ class Hand
       rank = returned[1]
     end
 
-    if straight && flush_type == nil
+    if straight && flush_type == false
       type = 'straight'
       rank = 5
     end
@@ -192,7 +195,7 @@ class Hand
       rank = 0
     end
 
-    if type == '-no rank-' && ace_type == true
+    if type == '-no rank-' && ace_type
       type = 'ace-high'
       rank = 1
     end

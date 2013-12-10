@@ -34,6 +34,4 @@ class Card
   def am_i_an_ace?(card)
     card.number == :ace
   end
-
-
 end
