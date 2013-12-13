@@ -28,68 +28,34 @@ class Hand
     nums_only
   end
 
-  def hand_suits_only
-    suits_only = []
-      @cards.each do |e|
-        suits_only << e.suit
-      end
-    nums_only
-  end
-
   def print_hand
     @cards.each do |card|
       puts "#{card.number}:#{card.suit}=#{card.value}"
     end
   end
 
-  def hand_cards_count
-    @cards.length
-  end
-
-  def a_flush?
-    #need to ask the card what suit it is.
-    d = 0
-    s = 0
-    c = 0
-    h = 0
+  def flush?
     flush = false
 
-    @cards.each do |e|
-      if e.suit == :diamonds then d = d + 1 end
-      if e.suit == :spades   then s = s + 1 end
-      if e.suit == :clubs    then c = c + 1 end
-      if e.suit == :hearts   then h = h + 1 end
-    end
+    diamond_flush = true unless @cards.count{|card| card.diamonds?(card)} < 5
+    club_flush    = true unless @cards.count{|card| card.clubs?(card)}    < 5
+    heart_flush   = true unless @cards.count{|card| card.hearts?(card)}   < 5
+    spade_flush   = true unless @cards.count{|card| card.spades?(card)}   < 5
 
-    if d == 5 then flush = true end
-    if s == 5 then flush = true end
-    if c == 5 then flush = true end
-    if h == 5 then flush = true end
-
+    if diamond_flush or club_flush or heart_flush or spade_flush then flush = true end
     flush
   end
 
-  def a_straight?
-    count_hits = 0
-    straight = false
-    previous = 0
-    index = 0
+  def straight?
+    straight = true
 
-    @cards.each do |card|
-      if index == 0
-        previous = card.value
+    @cards.each_cons(2) do |card1, card2|
+      if card1.value + 1 == card2.value
+        #good
       else
-        if card.value == previous + 1
-          count_hits = count_hits + 1
-        else
-          straight = false
-        end
+        straight = false
       end
-      index = index + 1
-      previous = card.value
     end
-
-    if count_hits == 4 then straight = true end
 
     straight
   end
@@ -103,77 +69,52 @@ class Hand
     type = nil
     rank = nil
 
-    (1..13).each do |num|
-      if nums_only.count(num) == 4 then
-        type = 'four of a kind'
-        rank = 8
-      elsif nums_only.count(num) == 3 then
-        type = 'three of a kind'
+    # counts = nums_only.group_by{|i| i}.map{|k,v| [k, v.count] }
+    # puts "counts are: #{counts}"
+
+    Card::VALUES.each do |value|
+      if nums_only.count(value) == 4 then
+        rank = 8 and type = 'four of a kind'
+      elsif nums_only.count(value) == 3 then
+        rank = 4 and type = 'three of a kind'
         three_kind = true
-        rank = 4
-      elsif nums_only.count(num) == 2 then
+      elsif nums_only.count(value) == 2 then
         if one_pair then
           two_pair = true
+          rank = 3 and type = 'two pair'
           one_pair = false
         else
           one_pair = true
+          rank = 2 and type = 'one pair'
         end
       end
     end
 
-    if one_pair
-      type = 'one pair'
-      rank = 2
-    end
-
-    if two_pair
-      type = 'two pair'
-      rank = 3
-    end
-
     if three_kind && one_pair then
-      type = 'full house'
-      rank = 7
+      rank = 7 and type = 'full house'
     end
 
     return type, rank
   end
 
-  def have_an_ace?
-    ace = false
-    @cards.each do |card|
-      if card.am_i_an_ace?(card) then ace = true end
-    end
-    # note: passed 'card' because @card is not known in card.class, only @cards.
-
-# @cards.any? &:ace?
-# @cards.any? { |card| card.ace? }
-    ace
+  def ace?
+    @cards.any? { |card| card.ace?(card) }
   end
 
   def rank_hand
-    flush_type = false
-    done = false
-
-    ace_type = have_an_ace?
-    straight = a_straight?
-
-    if straight then type = 'straight' end
-
-    flush_type = a_flush?
+    ace_type = ace?
+    straight = straight?
+    flush_type = flush?
 
     if flush_type
       if straight
         if ace_type
-          type = 'royal flush'
-          rank = 10
+          rank = 10 and type = 'royal flush'
         else
-          type = 'straight flush'
-          rank = 9
+          rank = 9 and type = 'straight flush'
         end
       else
-        type = 'flush'
-        rank = 6
+        rank = 6 and type = 'flush'
       end
     else
       returned = am_i_multi_same
@@ -182,22 +123,15 @@ class Hand
     end
 
     if straight && flush_type == false
-      type = 'straight'
-      rank = 5
+      rank = 5 and type = 'straight'
     end
 
-    if type == ''
-      type = '-no rank-'
-      rank = 0
-    end
-    if type == nil
-      type = '-no rank-'
-      rank = 0
+    if type == '' or type == nil
+      rank = 0 and type = '-no rank-'
     end
 
     if type == '-no rank-' && ace_type
-      type = 'ace-high'
-      rank = 1
+      rank = 1 and type = 'ace-high'
     end
 
     print_hand_rank(type)
@@ -214,22 +148,5 @@ class Hand
     puts "#{@player_name}"
     puts print_hand
     puts "#{type}"
-  end
-
-  def count_hearts
-    puts @cards
-    @cards.count{|x| x.eql? :hearts}
-  end
-
-  def count_spades
-    @cards.count{|x| x.eql? :spades}
-  end
-
-  def count_clubs
-    @cards.count{|x| x.eql? :clubs}
-  end
-
-  def count_diamonds
-    @cards.count{|x| x.eql? :diamonds}
   end
 end

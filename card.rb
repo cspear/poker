@@ -31,7 +31,34 @@ class Card
     @cards
   end
 
-  def am_i_an_ace?(card)
+  def ace?(card)
     card.number == :ace
   end
+
+  def diamonds?(card)
+    card.suit == :diamonds
+  end
+
+  def hearts?(card)
+    card.suit == :hearts
+  end
+
+  def clubs?(card)
+    card.suit == :clubs
+  end
+
+  def spades?(card)
+    card.suit == :spades
+  end
+
+  def card_numbers
+    [2..14]
+  end
+
+
+
+
+
+
+
 end

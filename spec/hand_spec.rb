@@ -1,6 +1,6 @@
 require_relative '../hand'
 
-describe "a_flush?" do
+describe "flush?" do
   before(:each) do
     @testcards = []
   end
@@ -13,7 +13,7 @@ describe "a_flush?" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.a_flush?.should eql true
+    @testhand.flush?.should eql true
   end
 
   it "should NOT be a flush" do
@@ -24,11 +24,11 @@ describe "a_flush?" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.a_flush?.should eql false
+    @testhand.flush?.should eql false
   end
 end
 
-describe "a_straight?" do
+describe "straight?" do
   before(:each) do
     @testcards = []
   end
@@ -41,7 +41,7 @@ describe "a_straight?" do
     @testcards << Card.new(:six, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.a_straight?.should eql true
+    @testhand.straight?.should eql true
   end
 
   it "should also be a straight" do
@@ -52,7 +52,7 @@ describe "a_straight?" do
     @testcards << Card.new(:two, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.a_straight?.should eql true
+    @testhand.straight?.should eql true
   end
 
   it "should NOT be a straight" do
@@ -63,7 +63,7 @@ describe "a_straight?" do
     @testcards << Card.new(:six, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.a_straight?.should eql false
+    @testhand.straight?.should eql false
   end
 end
 
@@ -139,7 +139,7 @@ describe "am_i_multi_same" do
   end
 end
 
-describe "have_an_ace?" do
+describe "ace?" do
   before(:each) do
     @testcards = []
   end
@@ -152,7 +152,7 @@ describe "have_an_ace?" do
     @testcards << Card.new(:ace, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.have_an_ace?.should eql true
+    @testhand.ace?.should eql true
   end
 
   it "should NOT have an ACE" do
@@ -163,7 +163,7 @@ describe "have_an_ace?" do
     @testcards << Card.new(:six, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.have_an_ace?.should eql false
+    @testhand.ace?.should eql false
   end
 
 
