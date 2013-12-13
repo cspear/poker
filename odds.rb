@@ -43,9 +43,9 @@ number_of_games_to_play.times do
 
 end
 
-winners.each_with_index do |winner, index|
-  puts "winners #{winner} of rank #{winning_hands_rank[index]}"
-end
+# winners.each_with_index do |winner, index|
+#   puts "winners #{winner} of rank #{winning_hands_rank[index]}"
+# end
 
 rank_aggregation_by_type = []
 rank_aggregation_by_type << ['royal flush', winning_hands_rank.count(10)]
