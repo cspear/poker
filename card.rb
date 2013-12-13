@@ -9,8 +9,8 @@ class Card
   attr_reader :number, :suit, :value, :short_num, :short_suit
 
   def initialize(number, suit)
-    if NUMBERS.include?(number) then @number = number else raise "number <#{number}> is invalid" end
-    if SUITS.include?(suit)     then @suit = suit     else raise "suit <#{suit}> is invalid"     end
+    if NUMBERS.include?(number) then @number = number else raise "number < #{number} > is invalid" end
+    if SUITS.include?(suit)     then @suit = suit     else raise "suit < #{suit} > is invalid"     end
 
     @short_num   = SHORT_NUMS[NUMBERS.index(number)]
     @value       = VALUES[NUMBERS.index(number)]

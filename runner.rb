@@ -32,7 +32,9 @@ if ARGV.first == nil
   puts "Congratulations: #{winner} (hand rank of: #{last_hand_rank})"
 
 else
+  # :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace
   argv_cards = []
+  raise "wrong number of cards, only enter 5" unless ARGV.count == 5
 
   ARGV.each do |card|
     suit = card.byteslice(-1)
@@ -40,9 +42,15 @@ else
     if suit == "c" then suit = :clubs    end
     if suit == "h" then suit = :hearts   end
     if suit == "d" then suit = :diamonds end
-    argv_number = card[0...-1]
 
-    argv_cards < Card.new(argv_number,suit)
+    argv_number = card[0...-1]
+    if argv_number == "a" then argv_number = "14" end
+    if argv_number == "k" then argv_number = "13" end
+    if argv_number == "q" then argv_number = "12" end
+    if argv_number == "j" then argv_number = "11" end
+
+    number = Card::NUMBERS[(argv_number.to_i - 2)]
+    argv_cards << Card.new(number, suit)
   end
     argv_hand = Hand.new("self selected", argv_cards)
     returned = argv_hand.rank_hand
