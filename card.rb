@@ -50,15 +50,4 @@ class Card
   def spades?(card)
     card.suit == :spades
   end
-
-  def card_numbers
-    [2..14]
-  end
-
-
-
-
-
-
-
 end
