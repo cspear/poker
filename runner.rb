@@ -17,8 +17,7 @@ if ARGV.first == nil
     each_player_cards = []
     each_player_cards = the_deck.deal_cards(5)
     player_hand = Hand.new(name, each_player_cards)
-    returned = player_hand.rank_hand
-    current_rank = returned[0]
+    current_rank = player_hand.rank_hand
     if current_rank > last_hand_rank
       winner = name
       last_hand_rank = current_rank
@@ -55,4 +54,6 @@ else
     argv_hand = Hand.new("self selected", argv_cards)
     returned = argv_hand.rank_hand
 end
+
+
 

@@ -4,7 +4,6 @@ class Hand
 
   attr_reader :player_name
 
-
   def initialize(player_name, cards)
     @cards = cards
     @player_name = player_name
@@ -35,38 +34,28 @@ class Hand
   end
 
   def flush?
-    flush = false
+    diamond_flush = true unless @cards.count{|card| card.diamonds?} < 5
+    club_flush    = true unless @cards.count{|card| card.clubs?}    < 5
+    heart_flush   = true unless @cards.count{|card| card.hearts?}   < 5
+    spade_flush   = true unless @cards.count{|card| card.spades?}   < 5
 
-    diamond_flush = true unless @cards.count{|card| card.diamonds?(card)} < 5
-    club_flush    = true unless @cards.count{|card| card.clubs?(card)}    < 5
-    heart_flush   = true unless @cards.count{|card| card.hearts?(card)}   < 5
-    spade_flush   = true unless @cards.count{|card| card.spades?(card)}   < 5
-
-    if diamond_flush or club_flush or heart_flush or spade_flush then flush = true end
-    flush
+    diamond_flush or club_flush or heart_flush or spade_flush
   end
 
   def straight?
-    straight = true
-
     @cards.each_cons(2) do |card1, card2|
-      if card1.value + 1 == card2.value
-        #good
-      else
-        straight = false
-      end
+      return false if card1.value + 1 != card2.value
     end
 
-    straight
+    true
   end
 
-  def am_i_multi_same
+  def multiple_type
     nums_only = hand_numbers_only
     one_pair = nil
     two_pair = nil
     three_kind = nil
     four_kind = nil
-    type = nil
     rank = nil
 
     # counts = nums_only.group_by{|i| i}.map{|k,v| [k, v.count] }
@@ -74,72 +63,71 @@ class Hand
 
     Card::VALUES.each do |value|
       if nums_only.count(value) == 4 then
-        rank = 8 and type = 'four of a kind'
+        rank = 8
       elsif nums_only.count(value) == 3 then
-        rank = 4 and type = 'three of a kind'
+        rank = 4
         three_kind = true
       elsif nums_only.count(value) == 2 then
         if one_pair then
           two_pair = true
-          rank = 3 and type = 'two pair'
+          rank = 3
           one_pair = false
         else
           one_pair = true
-          rank = 2 and type = 'one pair'
+          rank = 2
         end
       end
     end
 
     if three_kind && one_pair then
-      rank = 7 and type = 'full house'
+      rank = 7
     end
 
-    return type, rank
+    return rank
   end
 
-  def ace?
-    @cards.any? { |card| card.ace?(card) }
+  def have_ace?
+    @cards.any? { |card| card.ace? }
   end
 
   def rank_hand
-    ace_type = ace?
-    straight = straight?
-    flush_type = flush?
+    rank = 0
+    has_ace = have_ace?
+    is_straight = straight?
+    is_flush = flush?
 
-    if flush_type
-      if straight
-        if ace_type
-          rank = 10 and type = 'royal flush'
+    if is_flush
+      if is_straight
+        if has_ace
+          rank = 10
         else
-          rank = 9 and type = 'straight flush'
+          rank = 9
         end
       else
-        rank = 6 and type = 'flush'
+        rank = 6
       end
     else
-      returned = am_i_multi_same
-      type = returned[0]
-      rank = returned[1]
+      rank = multiple_type
     end
 
-    if straight && flush_type == false
-      rank = 5 and type = 'straight'
+    if rank == 0 && has_ace
+      rank = 1
     end
 
-    if type == '' or type == nil
-      rank = 0 and type = '-no rank-'
+    if rank == nil
+      rank = 0
     end
 
-    if type == '-no rank-' && ace_type
-      rank = 1 and type = 'ace-high'
+    if is_straight && is_flush == false
+      rank = 5
     end
 
-    print_hand_rank(type)
+    print_hand_rank(rank)
 
-    return rank, type
+    return rank
   end
 
-  def print_hand_rank(type)
+  def print_hand_rank(print_rank)
     print_hand = ""
     @cards.each do |ea|
       print_hand = print_hand + " #{ea.short_num}#{ea.short_suit}"
@@ -147,6 +135,25 @@ class Hand
 
     puts "#{@player_name}"
     puts print_hand
-    puts "#{type}"
+    rank_in_text = rank_to_text(print_rank)
+    puts "#{rank_in_text}"
+  end
+
+  def rank_to_text(preTextRank)
+    case preTextRank
+      when 0 then "-no rank-"
+      when 1 then "ace-high"
+      when 2 then "one pair"
+      when 3 then "two pair"
+      when 4 then "three of a kind"
+      when 5 then "straight"
+      when 6 then "flush"
+      when 7 then "full house"
+      when 8 then "four of a kind"
+      when 9 then "straight flush"
+      when 10 then "royal flush"
+      else
+        "-ERROR-"
+    end
   end
 end

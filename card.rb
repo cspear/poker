@@ -31,23 +31,23 @@ class Card
     @cards
   end
 
-  def ace?(card)
-    card.number == :ace
+  def ace?
+    @number == :ace
   end
 
-  def diamonds?(card)
-    card.suit == :diamonds
+  def diamonds?
+    @suit == :diamonds
   end
 
-  def hearts?(card)
-    card.suit == :hearts
+  def hearts?
+    @suit == :hearts
   end
 
-  def clubs?(card)
-    card.suit == :clubs
+  def clubs?
+    @suit == :clubs
   end
 
-  def spades?(card)
-    card.suit == :spades
+  def spades?
+    @suit == :spades
   end
 end

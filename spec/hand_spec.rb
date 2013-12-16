@@ -24,7 +24,7 @@ describe "flush?" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.flush?.should eql false
+    @testhand.flush?.should eql nil
   end
 end
 
@@ -67,7 +67,7 @@ describe "straight?" do
   end
 end
 
-describe "am_i_multi_same" do
+describe "multiple_type" do
   before(:each) do
     @testcards = []
   end
@@ -80,7 +80,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql 'one pair'
+    @testhand.multiple_type.should eql 2
   end
 
   it "should be a TWO PAIR" do
@@ -91,7 +91,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql 'two pair'
+    @testhand.multiple_type.should eql 3
   end
 
   it "should be a THREE OF A KIND" do
@@ -102,7 +102,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql 'three of a kind'
+    @testhand.multiple_type.should eql 4
   end
 
   it "should be FOUR OF A KIND" do
@@ -113,7 +113,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql 'four of a kind'
+    @testhand.multiple_type.should eql 8
   end
 
   it "should be FULL HOUSE" do
@@ -124,7 +124,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:three, :hearts)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql 'full house'
+    @testhand.multiple_type.should eql 7
   end
 
   it "should NOT be a multi" do
@@ -135,7 +135,7 @@ describe "am_i_multi_same" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.am_i_multi_same[0].should eql nil
+    @testhand.multiple_type.should eql nil
   end
 end
 
@@ -152,7 +152,7 @@ describe "ace?" do
     @testcards << Card.new(:ace, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.ace?.should eql true
+    @testhand.have_ace?.should eql true
   end
 
   it "should NOT have an ACE" do
@@ -163,7 +163,7 @@ describe "ace?" do
     @testcards << Card.new(:six, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.ace?.should eql false
+    @testhand.have_ace?.should eql false
   end
 
 
@@ -182,7 +182,7 @@ describe "rank_hand" do
     @testcards << Card.new(:ten, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.rank_hand[1].should eql 'royal flush'
+    @testhand.rank_hand.should eql 10
   end
 
   it "should have be a STRAIGHT FLUSH" do
@@ -193,7 +193,7 @@ describe "rank_hand" do
     @testcards << Card.new(:ten, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.rank_hand[1].should eql 'straight flush'
+    @testhand.rank_hand.should eql 9
   end
 end
 
