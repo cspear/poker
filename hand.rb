@@ -55,7 +55,6 @@ class Hand
     one_pair = nil
     two_pair = nil
     three_kind = nil
-    four_kind = nil
     rank = nil
 
     # counts = nums_only.group_by{|i| i}.map{|k,v| [k, v.count] }

@@ -46,17 +46,41 @@ else
     raise "  wrong number of cards, enter 5 card.  see '--help' for more information." unless ARGV.count == 5
 
     ARGV.each do |card|
-      suit = card.byteslice(-1)
-      if suit == "s" then suit = :spades   end
-      if suit == "c" then suit = :clubs    end
-      if suit == "h" then suit = :hearts   end
-      if suit == "d" then suit = :diamonds end
+      argv_suit = card.byteslice(-1)
+      if argv_suit == "s" then suit = :spades   end
+      if argv_suit == "c" then suit = :clubs    end
+      if argv_suit == "h" then suit = :hearts   end
+      if argv_suit == "d" then suit = :diamonds end
+
+
+#another way
+      # argv_suit = card.byteslice(-1)
+      # suits = {'s' => :spades, 'c' => :clubs, 'h' => :hearts, 'd' => diamonds}
+      # suits.each do |card, value|
+        #   if argv_suit == card then argv_suit = value end
+        # end
 
       argv_number = card[0...-1]
       if argv_number == "a" then argv_number = "14" end
       if argv_number == "k" then argv_number = "13" end
       if argv_number == "q" then argv_number = "12" end
       if argv_number == "j" then argv_number = "11" end
+
+#another way (same # lines.)
+      # argv_number = card[0..-1]
+      # face_cards = {'a' => '14', 'k' => '13', 'q' => '12', 'j' => '11'}
+      # face_cards.each do |card, value|
+      #   if argv_number == card then argv_number = value end
+      # end
+
+#combined:
+      #special_cards = {'s' => :spades, 'c' => :clubs, 'h' => :hearts, 'd' => diamonds,'a' => '14', 'k' => '13', 'q' => '12', 'j' => '11'}
+      #argv_suit   = card.byteslice(-1)
+      #argv_number = card[0...-1]
+      #special_cards.each do |card, value|
+      #   if argv_number == card then argv_number = value end
+      #   if argv_suit   == card then argv_suit   = value end
+      #end
 
       number = Card::NUMBERS[(argv_number.to_i - 2)]
       argv_cards << Card.new(number, suit)
