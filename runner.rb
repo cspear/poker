@@ -32,17 +32,18 @@ if ARGV.first == nil
 
 else
   if ARGV.first == "--help"
-    puts "poker.rb help"
     puts " "
-    puts "if you want to evaluate a custom hand you must supply 5 cards in a"
-    puts "format like this: <number><one-letter suit>.  for example: 5d 10h"
-    puts "a for ace, k for king, q for queen, j for jack"
+    puts "  poker.rb help"
     puts " "
-    puts "ruby runner.rb 5h 6h 7h 8h 9h"
+    puts "  if you want to evaluate a custom hand you must supply 5 cards in a"
+    puts "  format like this: <number><one-letter suit>.  for example: 5d 10h 8s 3c 3h"
+    puts "  a for ace, k for king, q for queen, j for jack"
+    puts " "
+    puts "  ruby runner.rb 5h 6h 7h 8h 9h"
     puts " "
   else
     argv_cards = []
-    raise "wrong number of cards, only enter 5" unless ARGV.count == 5
+    raise "  wrong number of cards, enter 5 card.  see '--help' for more information." unless ARGV.count == 5
 
     ARGV.each do |card|
       suit = card.byteslice(-1)
