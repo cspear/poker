@@ -34,6 +34,10 @@ class Hand
   end
 
   def flush?
+
+
+
+
     diamond_flush = true unless @cards.count{|card| card.diamonds?} < 5
     club_flush    = true unless @cards.count{|card| card.clubs?}    < 5
     heart_flush   = true unless @cards.count{|card| card.hearts?}   < 5
