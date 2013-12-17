@@ -10,11 +10,6 @@ class Hand
     sort!
   end
 
-  def deal_cards(hand_size)
-    @player_cards = []
-    @player_cards = deck.deal_cards(hand_size)
-  end
-
   def sort!
     @cards.sort_by! { |k| k.value }
   end
@@ -34,13 +29,9 @@ class Hand
   end
 
   def flush?
-
-    diamond_flush = true unless @cards.count{|card| card.diamonds?} < 5
-    club_flush    = true unless @cards.count{|card| card.clubs?}    < 5
-    heart_flush   = true unless @cards.count{|card| card.hearts?}   < 5
-    spade_flush   = true unless @cards.count{|card| card.spades?}   < 5
-
-    diamond_flush or club_flush or heart_flush or spade_flush
+    ['diamonds?', 'clubs?', 'hearts?', 'spades?'].any? do |method|
+      @cards.all?{|card| card.send(method)}
+    end
   end
 
   def straight?

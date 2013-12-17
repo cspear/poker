@@ -24,7 +24,7 @@ describe "flush?" do
     @testcards << Card.new(:jack, :diamonds)
 
     @testhand = Hand.new('testhand', @testcards)
-    @testhand.flush?.should eql nil
+    @testhand.flush?.should eql false
   end
 end
 
